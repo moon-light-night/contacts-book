@@ -15,26 +15,31 @@ export default new Vuex.Store({
   actions: {
     async passLink(ctx, newLink) {
       for (let i = 0; i < this.state.contacts.length; i++) {
+        var person
         if (this.state.contacts[i].id == newLink) {
-          // const person = Object.assign({}, this.state.contacts[i])
-          const person = this.state.contacts[i]
-          console.log(person)
+          person = this.state.contacts[i]
         }
       }
-      console.log(person)
       ctx.commit('getPerson', person)
+    },
+    async passContact(ctx, newContact) {
+      ctx.commit('addContact', newContact)
     },
   },
   mutations: {
     getPerson(state, person) {
       state.person = person
     },
+    addContact(state, newContact) {
+      state.contacts.push(newContact)
+    },
   },
   getters: {
-    returnContacts(state) {
+    RETURN_CONTACTS(state) {
       return state.contacts
     },
-    returnPerson(state) {
+    RETURN_PERSON(state) {
+      state.person = Object.entries(state.person)
       return state.person
     },
   },
