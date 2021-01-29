@@ -1,16 +1,16 @@
 <template>
   <div>
-    <ul v-for="contact in RETURN_CONTACTS" :key="contact.id">
+    <ul v-for="(contact, index) in RETURN_CONTACTS" :key="index">
       <li>
         <a
-          @click="$router.push({ name: 'ContactsInfo' }), getId()"
-          :id="contact.id"
+          @click.ctrl="deleteContact"
+          @click.exact="$router.push({ name: 'ContactsInfo' }), getId()"
+          :id="contact.name"
           >{{ contact.name }}</a
         >
       </li>
     </ul>
     <input id="name" type="text" placeholder="name" />
-    <input id="id" type="text" placeholder="id" />
     <input id="tel" type="text" placeholder="tel" />
     <button @click="sendData">click</button>
   </div>
@@ -22,8 +22,8 @@ export default {
   data() {
     return {
       link: '',
+      deleteLink: '',
       name: '',
-      id: '',
       tel: '',
       newContact: {},
     }
@@ -36,10 +36,15 @@ export default {
     },
     sendData() {
       this.newContact['name'] = document.getElementById('name').value
-      this.newContact['id'] = document.getElementById('id').value
       this.newContact['tel'] = document.getElementById('tel').value
-      console.log(this.newContact)
+      document.getElementById('name').value = ''
+      document.getElementById('tel').value = ''
       this.$store.dispatch('passContact', this.newContact)
+      this.newContact = {}
+    },
+    deleteContact() {
+      this.deleteLink = event.target.id
+      this.$store.dispatch('passDeleteLink', this.deleteLink)
     },
   },
 }

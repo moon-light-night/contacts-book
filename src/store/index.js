@@ -6,17 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     person: '',
-    contacts: [
-      { name: 'Kurt Cobain', id: 1, tel: '8999 444 33 22' },
-      { name: 'Till Lindeman', id: 2, tel: '8545 434 31 32' },
-      { name: 'David Dreyman', id: 3, tel: '8433 475 37 52' },
-    ],
+    contacts: [],
+    newFieldArr: null,
   },
   actions: {
     async passLink(ctx, newLink) {
       for (let i = 0; i < this.state.contacts.length; i++) {
         var person
-        if (this.state.contacts[i].id == newLink) {
+        if (this.state.contacts[i].name == newLink) {
           person = this.state.contacts[i]
         }
       }
@@ -24,6 +21,12 @@ export default new Vuex.Store({
     },
     async passContact(ctx, newContact) {
       ctx.commit('addContact', newContact)
+    },
+    async passDeleteLink(ctx, deleteLink) {
+      ctx.commit('deleteContact', deleteLink)
+    },
+    async passNewField(ctx, newField) {
+      ctx.commit('addField', newField)
     },
   },
   mutations: {
@@ -33,6 +36,21 @@ export default new Vuex.Store({
     addContact(state, newContact) {
       state.contacts.push(newContact)
     },
+    deleteContact(state, deleteLink) {
+      for (let i = 0; i < state.contacts.length; i++) {
+        if (state.contacts[i].name == deleteLink) {
+          if (confirm('You really want to delete this contact?')) {
+            state.contacts.splice(i, 1)
+          } else {
+            console.log('Ok, be carefull')
+          }
+        }
+      }
+    },
+    addField(state, newField) {
+      state.newFieldArr = []
+      state.newFieldArr.push(newField)
+    },
   },
   getters: {
     RETURN_CONTACTS(state) {
@@ -41,6 +59,9 @@ export default new Vuex.Store({
     RETURN_PERSON(state) {
       state.person = Object.entries(state.person)
       return state.person
+    },
+    RETURN_FIELD(state) {
+      return state.newFieldArr
     },
   },
 })
