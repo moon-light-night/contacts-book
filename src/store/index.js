@@ -8,6 +8,8 @@ export default new Vuex.Store({
     person: '',
     contacts: [],
     newFieldArr: [],
+    updatePerson: '',
+    arr: [],
   },
   actions: {
     async passLink(ctx, newLink) {
@@ -32,6 +34,7 @@ export default new Vuex.Store({
   mutations: {
     getPerson(state, person) {
       state.person = person
+      state.arr = []
     },
     addContact(state, newContact) {
       state.contacts.push(newContact)
@@ -48,8 +51,13 @@ export default new Vuex.Store({
       }
     },
     addField(state, newField) {
-      // state.newFieldArr = []
-      state.newFieldArr.push(newField)
+      state.arr.push(newField)
+      // state.arr.push(state.person)
+      // state.arr.push(newField)
+      // state.arr = []
+      // console.log(state.arr)
+      // state.updatePerson.push(newField)
+      // state.newFieldArr.push(newField)
       // state.newFieldArr = []
     },
   },
@@ -58,11 +66,34 @@ export default new Vuex.Store({
       return state.contacts
     },
     RETURN_PERSON(state) {
-      state.person = Object.entries(state.person)
-      return state.person
+      console.log(state.arr)
+      // if (state.arr[0] !== {}) {
+      //   state.arr.splice(0, 1)
+      //   state.arr.push(state.person)
+      // }
+      if (state.arr.length === 0) {
+        state.arr.push(state.person)
+      }
+      if (state.arr[0] === '') {
+        console.log('hi')
+        // state.arr.push(state.person)
+        state.arr.splice(0, 1)
+      }
+      // if (state.arr[0] == '') {
+      //   console.log('hi')
+      //   state.arr.push(state.person)
+      //   state.arr.splice(0, 1)
+      //   console.log(state.arr)
+      // } else {
+      // }
+      // state.arr = []
+      // state.arr.push(state.person)
+      // state.person = Object.entries(state.person)
+      // return state.person
+      return state.arr
     },
-    RETURN_FIELD(state) {
-      return state.newFieldArr
-    },
+    // RETURN_FIELD(state) {
+    //   return state.newFieldArr
+    // },
   },
 })

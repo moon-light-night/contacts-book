@@ -11,7 +11,7 @@
       </li>
     </ul>
     <input id="name" type="text" placeholder="name" />
-    <input id="tel" type="text" placeholder="tel" />
+    <!-- <input id="tel" type="text" placeholder="tel" /> -->
     <button @click="sendData">click</button>
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
       link: '',
       deleteLink: '',
       name: '',
-      tel: '',
+      // tel: '',
       newContact: {},
     }
   },
@@ -36,9 +36,9 @@ export default {
     },
     sendData() {
       this.newContact['name'] = document.getElementById('name').value
-      this.newContact['tel'] = document.getElementById('tel').value
+      // this.newContact['tel'] = document.getElementById('tel').value
       document.getElementById('name').value = ''
-      document.getElementById('tel').value = ''
+      // document.getElementById('tel').value = ''
       this.$store.dispatch('passContact', this.newContact)
       this.newContact = {}
     },

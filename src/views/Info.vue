@@ -1,15 +1,18 @@
 <template>
   <div>
     <ul>
-      <li v-for="(person, index) in RETURN_PERSON" :key="index">
+      <!-- <li v-for="(person, index) in RETURN_PERSON" :key="index">
         {{ `${person[0]} - ${person[1]}` }}
+      </li> -->
+      <li v-for="(person, index) in RETURN_PERSON" :key="index">
+        {{ `${Object.keys(person)}` }} - {{ `${Object.values(person)}` }}
       </li>
 
-      <div v-if="RETURN_FIELD">
+      <!-- <div v-if="RETURN_FIELD">
         <ul v-for="(field, index) in RETURN_FIELD" :key="index">
           <li>{{ field[0] }} - {{ field[1] }}<br /></li>
         </ul>
-      </div>
+      </div> -->
 
       <a @click="$router.push({ name: 'Contacts' })">to contacts</a
       ><br />
@@ -33,18 +36,23 @@ export default {
   data() {
     return {
       isActive: true,
-      entries: [],
+      entries: null,
     }
   },
   computed: mapGetters(['RETURN_PERSON', 'RETURN_FIELD']),
   methods: {
     addField() {
-      this.entries.push(document.querySelector('#name').value)
-      this.entries.push(document.querySelector('#value').value)
+      this.entries = {}
+      this.entries[
+        document.querySelector('#name').value
+      ] = document.querySelector('#value').value
+      // this.entries.push(document.querySelector('#name').value)
+      // this.entries.push(document.querySelector('#value').value)
+      // console.log(this.entries)
       document.querySelector('#value').value = ''
       document.querySelector('#name').value = ''
       this.$store.dispatch('passNewField', this.entries)
-      this.entries = []
+      // this.entries = []
     },
   },
 }
