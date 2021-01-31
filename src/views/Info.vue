@@ -4,9 +4,13 @@
       <li v-for="(person, index) in RETURN_PERSON" :key="index">
         {{ `${person[0]} - ${person[1]}` }}
       </li>
-      <li v-if="RETURN_FIELD">
-        {{ RETURN_FIELD[0][0] }} - {{ RETURN_FIELD[0][1] }}
-      </li>
+
+      <div v-if="RETURN_FIELD">
+        <ul v-for="(field, index) in RETURN_FIELD" :key="index">
+          <li>{{ field[0] }} - {{ field[1] }}<br /></li>
+        </ul>
+      </div>
+
       <a @click="$router.push({ name: 'Contacts' })">to contacts</a
       ><br />
       <a @click="$router.push({ name: 'Home' })">to main</a
@@ -40,7 +44,7 @@ export default {
       document.querySelector('#value').value = ''
       document.querySelector('#name').value = ''
       this.$store.dispatch('passNewField', this.entries)
-      // this.entries = []
+      this.entries = []
     },
   },
 }

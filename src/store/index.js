@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     person: '',
     contacts: [],
-    newFieldArr: null,
+    newFieldArr: [],
   },
   actions: {
     async passLink(ctx, newLink) {
@@ -48,8 +48,9 @@ export default new Vuex.Store({
       }
     },
     addField(state, newField) {
-      state.newFieldArr = []
+      // state.newFieldArr = []
       state.newFieldArr.push(newField)
+      // state.newFieldArr = []
     },
   },
   getters: {
